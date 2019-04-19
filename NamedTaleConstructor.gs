@@ -9,7 +9,7 @@ function NamedTableConstructor(values, iKeyColumn, iFieldRow){
     this.iKeyColumn = iKeyColumn;
     this.iFieldRow = iFieldRow;
   }//if
-  
+
   this.keys = {};
   for(var i=this.iFieldRow+1; i<this.values.length; ++i){
     var row = this.values[i];
@@ -29,6 +29,7 @@ function NamedTableConstructor(values, iKeyColumn, iFieldRow){
     this.fields[field] = i;
   }//for i
   return this;
+
 }//NamedTableConstructor
 
 NamedTableConstructor.prototype.set = function(key,field,value){
@@ -54,3 +55,52 @@ NamedTableConstructor.prototype.get = function(key,field){
 NamedTableConstructor.prototype.getValues = function(){
   return this.values;
 };
+
+NamedTableConstructor.prototype.checkIntegrity = function(){
+  if(typeof this.values !== "object") throw "this.value is not an object.";
+  for(var i in this.values){
+    if(typeof this.values[i] !== "object") throw "this.values[i] is not an object.";
+    if(this.values[0].length !== this.values[i].length) throw "all widths are not identical.";
+  }//for i
+}
+
+function testNamedTableConstructor(){
+  var namedTable = new NamedTableConstructor();
+  namedTable.checkIntegrity();
+}
+
+function testNamedTableConstructor2(){
+  var namedTable = new NamedTableConstructor([
+    [null, "f1", "f2", "f3"],
+    ["k1", "v11", "v12", "v13"],
+    ["k2", "v21", "v22", "v23"]
+  ],0,0);
+  namedTable.checkIntegrity();
+}
+
+function testNanmedTableConstructor3(){
+  var namedTable = new NamedTableConstructor([
+    [null, "f1", "f2", "f3"],
+    ["k1", "v11", "v12", ],
+    ["k2", "v21", "v22", "v23"]
+  ],0,0);
+  namedTable.checkIntegrity();
+}
+
+function testNanmedTableConstructor4(){
+  var namedTable = new NamedTableConstructor([
+    [null, "f1", "f2", "f3"],
+    ["k1", "v11", "v12", null],
+    ["k2", "v21", "v22", "v23"]
+  ],0,0);
+  namedTable.checkIntegrity();
+}
+
+function testNanmedTableConstructor5(){
+  var namedTable = new NamedTableConstructor([
+    [null, "f1", "f2", "f3"],
+    ["k1", "v11", "v12", "v23"],
+    [2 , "v21", "v22", "v23"]
+  ],0,0);
+  namedTable.checkIntegrity();
+}

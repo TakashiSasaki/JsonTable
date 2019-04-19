@@ -29,4 +29,5 @@ ExtendableTableConstructor.prototype.addNewField = function(field){
 
 function testExtendableTableConstructor(){
   var extendableTable = new ExtendableTableConstructor();
+  extendableTable.checkIntegrity();
 }//testExtendableTableConstructor
