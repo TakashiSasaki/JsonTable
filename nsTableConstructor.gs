@@ -56,4 +56,6 @@ function testNsTableConstructor(){
   nsTable.set("k1", "f1", "FALSE");
   var x = nsTable.get("k1", "f1"); 
   if(x !== false) throw "expecting boolean FALSE";  
+  nsTable.set("k1", "f1", '"hello"');
+  if(nsTable.get("k1", "f1") !== true) throw "expecting double quoted hello";  
 }
