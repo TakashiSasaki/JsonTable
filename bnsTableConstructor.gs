@@ -71,4 +71,10 @@ function testBnsTableConstructor(){
   if(bnsTable.get("k1", "f1") !== false) throw "expecting boolean false";
   bnsTable.set("k1", "f1", true);
   if(bnsTable.get("k1", "f1") !== true) throw "expecting boolean true";
+  bnsTable.set("k1", "f1", '"');
+  if(bnsTable.get("k1", "f1") !== '"') throw "expecting double quote";
+  bnsTable.set("k1", "f1", '"TRUE"');
+  if(bnsTable.get("k1", "f1") !== '"TRUE"') throw "expecting double quoted TRUE";
+  bnsTable.set("k1", "f1", '"FALSE"');
+  if(bnsTable.get("k1", "f1") !== '"FALSE"') throw "expecting double quoted FALSE";
 }//testBnsTableConstructor
